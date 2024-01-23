@@ -1,9 +1,27 @@
-import { ChevronDown, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { Header } from "../components/Header";
 import { Video } from "../components/Video";
 import { Module } from "../components/Module";
+import * as Accordion from "@radix-ui/react-accordion";
+import { useAppSelector } from "../store";
+import { useEffect, useState } from "react";
+import { useCurrentLesson } from "../store/slices/player";
 
 export function Player() {
+  const modules = useAppSelector((state) => state.player.course.modules);
+
+  const { currentModule, currentLesson } = useCurrentLesson();
+
+  const [activeAccordion, setActiveAccordion] = useState(currentModule.title);
+
+  useEffect(() => {
+    setActiveAccordion(currentModule.title);
+  }, [currentModule]);
+
+  useEffect(() => {
+    document.title = `Assistindo: ${currentLesson.title}`;
+  }, [currentLesson]);
+
   return (
     <div className="h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center px-4">
       <div className="flex w-[1100px] flex-col gap-6">
@@ -23,23 +41,24 @@ export function Player() {
           </div>
 
           <aside className="w-80 border-l border-zinc-800 bg-zinc-900 absolute top-0 bottom-0 right-0 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-zinc-950 scrollbar-thumb-zinc-800 divide-y-2 divide-zinc-900">
-            <Module
-              moduleIndex={0}
-              title="Desvendando o Redux"
-              amountOfLessons={3}
-            />
-
-            <Module
-              moduleIndex={0}
-              title="Desvendando o Redux"
-              amountOfLessons={3}
-            />
-
-            <Module
-              moduleIndex={0}
-              title="Desvendando o Redux"
-              amountOfLessons={3}
-            />
+            <Accordion.Root
+              type="single"
+              collapsible
+              value={activeAccordion}
+              onValueChange={(newActiveAccordion) =>
+                setActiveAccordion(newActiveAccordion)
+              }>
+              {modules.map((module, index) => {
+                return (
+                  <Module
+                    key={module.id}
+                    moduleIndex={index}
+                    title={module.title}
+                    amountOfLessons={module.lessons.length}
+                  />
+                );
+              })}
+            </Accordion.Root>
           </aside>
         </main>
       </div>
