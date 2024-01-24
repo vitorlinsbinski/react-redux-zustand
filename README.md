@@ -1,5 +1,5 @@
-<div align="center" style="width: 32px; height: 32px;">
-  <img src="./public/redux-logo.svg" style="width: 32px; height: 32px;" />
+<div align="center" style="width: 64px; height: 64px;">
+  <img src="./public/redux-logo.svg" style="width: 64px; height: 64px;" />
 </div>
 
 <h1 align = "center">Video Player using Redux and Zustand</h1>
