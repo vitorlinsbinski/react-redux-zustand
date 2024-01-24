@@ -3,24 +3,37 @@ import { Header } from "../components/Header";
 import { Video } from "../components/Video";
 import { Module } from "../components/Module";
 import * as Accordion from "@radix-ui/react-accordion";
-import { useAppSelector } from "../store";
+import { useAppDispatch, useAppSelector } from "../store";
 import { useEffect, useState } from "react";
-import { useCurrentLesson } from "../store/slices/player";
+import { loadCourse, useCurrentLesson } from "../store/slices/player";
+import { ModuleSkeleton } from "../components/ModuleSkeleton";
 
 export function Player() {
-  const modules = useAppSelector((state) => state.player.course.modules);
+  const dispatch = useAppDispatch();
+
+  const modules = useAppSelector((state) => state.player.course?.modules);
 
   const { currentModule, currentLesson } = useCurrentLesson();
 
-  const [activeAccordion, setActiveAccordion] = useState(currentModule.title);
+  const [activeAccordion, setActiveAccordion] = useState(currentModule?.title);
+
+  const isCourseLoading = useAppSelector((state) => state.player.isLoading);
 
   useEffect(() => {
-    setActiveAccordion(currentModule.title);
+    if (currentModule) {
+      setActiveAccordion(currentModule.title);
+    }
   }, [currentModule]);
 
   useEffect(() => {
-    document.title = `Assistindo: ${currentLesson.title}`;
+    if (currentLesson) {
+      document.title = `Assistindo: ${currentLesson.title}`;
+    }
   }, [currentLesson]);
+
+  useEffect(() => {
+    dispatch(loadCourse());
+  }, []);
 
   return (
     <div className="h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center px-4">
@@ -48,16 +61,25 @@ export function Player() {
               onValueChange={(newActiveAccordion) =>
                 setActiveAccordion(newActiveAccordion)
               }>
-              {modules.map((module, index) => {
-                return (
-                  <Module
-                    key={module.id}
-                    moduleIndex={index}
-                    title={module.title}
-                    amountOfLessons={module.lessons.length}
-                  />
-                );
-              })}
+              {isCourseLoading ? (
+                <>
+                  <ModuleSkeleton id="1" />
+                  <ModuleSkeleton id="2" />
+                  <ModuleSkeleton id="3" />
+                </>
+              ) : (
+                modules &&
+                modules.map((module, index) => {
+                  return (
+                    <Module
+                      key={module.id}
+                      moduleIndex={index}
+                      title={module.title}
+                      amountOfLessons={module.lessons.length}
+                    />
+                  );
+                })
+              )}
             </Accordion.Root>
           </aside>
         </main>

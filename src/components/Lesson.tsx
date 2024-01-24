@@ -20,7 +20,7 @@ export function Lesson({
       onClick={onPlay}
       disabled={isCurrent}>
       {isCurrent ? (
-        <PlayCircle className="w-4 h-4 text-emerald-400" />
+        <PlayCircle className="w-4 h-4 text-emerald-400 animate-scaleUp" />
       ) : (
         <Video className="w-4 h-4 text-zinc-500" />
       )}

@@ -15,11 +15,20 @@ export default {
           },
           to: { height: 0, opacity: "0" },
         },
+        scaleUp: {
+          from: {
+            transform: "scale(1.2)",
+          },
+          to: {
+            transform: "scale(1)",
+          },
+        },
       },
       animation: {
         slideDownAndFade:
           "slideDownAndFade 300ms cubic-bezier(0.87, 0, 0.13, 1)",
         slideUpAndFade: "slideUpAndFade 300ms cubic-bezier(0.87, 0, 0.13, 1)",
+        scaleUp: "scaleUp 300ms cubic-bezier(0.68,-0.55,0.27,1.55)",
       },
     },
   },
