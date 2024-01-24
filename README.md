@@ -1,4 +1,4 @@
-<div align="center" style="width: 100px; height: 100px;">
+<div align="center" style="width: 16px; height: 16px;">
   <img src="./public/redux-logo.svg" style="width: 100%; height: 100%;" />
 </div>
 
