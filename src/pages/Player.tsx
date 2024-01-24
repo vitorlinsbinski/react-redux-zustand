@@ -3,21 +3,22 @@ import { Header } from "../components/Header";
 import { Video } from "../components/Video";
 import { Module } from "../components/Module";
 import * as Accordion from "@radix-ui/react-accordion";
-import { useAppDispatch, useAppSelector } from "../store";
 import { useEffect, useState } from "react";
-import { loadCourse, useCurrentLesson } from "../store/slices/player";
 import { ModuleSkeleton } from "../components/ModuleSkeleton";
+import { useCurrentLesson, useStore } from "../zustand-store";
 
 export function Player() {
-  const dispatch = useAppDispatch();
-
-  const modules = useAppSelector((state) => state.player.course?.modules);
+  const { course, load, isCourseLoading } = useStore((store) => {
+    return {
+      course: store.course,
+      load: store.load,
+      isCourseLoading: store.isLoading,
+    };
+  });
 
   const { currentModule, currentLesson } = useCurrentLesson();
 
   const [activeAccordion, setActiveAccordion] = useState(currentModule?.title);
-
-  const isCourseLoading = useAppSelector((state) => state.player.isLoading);
 
   useEffect(() => {
     if (currentModule) {
@@ -32,7 +33,7 @@ export function Player() {
   }, [currentLesson]);
 
   useEffect(() => {
-    dispatch(loadCourse());
+    load();
   }, []);
 
   return (
@@ -68,8 +69,8 @@ export function Player() {
                   <ModuleSkeleton id="3" />
                 </>
               ) : (
-                modules &&
-                modules.map((module, index) => {
+                course &&
+                course.modules.map((module, index) => {
                   return (
                     <Module
                       key={module.id}
