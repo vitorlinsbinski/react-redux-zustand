@@ -50,6 +50,9 @@ When a video has ended, the next lesson will automatically play, even if the cur
     # Install all dependencies:
     $ npm install
 
+    # Run the JSON server:
+    $ npm run server
+
     # Run the application:
     $ npm run dev
 ```
