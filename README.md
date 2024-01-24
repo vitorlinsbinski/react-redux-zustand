@@ -1,4 +1,4 @@
-<div align="center">
+<div align="center" style=={{width: 20px, height: 20px}}>
   <img src="./public/redux-logo.svg"/>
 </div>
 
