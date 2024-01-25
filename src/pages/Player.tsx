@@ -37,7 +37,7 @@ export function Player() {
   }, []);
 
   return (
-    <div className="h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center px-4">
+    <div className="h-screen px-4 py-5 bg-zinc-950 text-zinc-50 flex justify-center items-center md:h-screen md:py-0">
       <div className="flex w-[1100px] flex-col gap-6">
         <div className="flex items-center justify-between">
           {/* Header */}
@@ -49,12 +49,12 @@ export function Player() {
           </button>
         </div>
 
-        <main className="relative flex overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900 shadow pr-80">
+        <main className="relative flex flex-col overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900 shadow md:pr-80 md:flex-row">
           <div className="flex-1">
             <Video />
           </div>
 
-          <aside className="w-80 border-l border-zinc-800 bg-zinc-900 absolute top-0 bottom-0 right-0 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-zinc-950 scrollbar-thumb-zinc-800 divide-y-2 divide-zinc-900">
+          <aside className="md:w-80 border-l border-zinc-800 bg-zinc-900 relative top-0 bottom-0 right-0 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-zinc-950 scrollbar-thumb-zinc-800 divide-y-2 divide-zinc-900 md:absolute w-full">
             <Accordion.Root
               type="single"
               collapsible
